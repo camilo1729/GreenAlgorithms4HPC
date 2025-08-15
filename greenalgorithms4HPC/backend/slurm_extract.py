@@ -4,6 +4,7 @@ import subprocess
 import pandas as pd
 from io import BytesIO
 import datetime
+from datetime import time
 import os
 import numpy as np
 
@@ -119,29 +120,15 @@ class Helpers_WM():
             n_days = 0
             HHMMSSms = x
 
-        # Parse ms
-        ms_split = HHMMSSms.split('.')
-        if len(ms_split) == 2:
-            n_ms = int(ms_split[1])
-            HHMMSS = ms_split[0]
-        else:
-            n_ms = 0
-            HHMMSS = HHMMSSms
+        ptime = time.fromisoformat(HHMMSSms)
+        milliseconds = ptime.microsecond / 1000
+        if n_days + ptime.hour + ptime.minute + ptime.second == 0:
+            if ptime.microsecond > 0:
+                milliseconds = 0
 
-        # Parse HH,MM,SS
-        last_split = HHMMSS.split(':')
-        if len(last_split) == 3:
-            to_add = []
-        elif len(last_split) == 2:
-            to_add = ['00']
-        elif len(last_split) == 1:
-            to_add = ['00', '00']
-        else:
-            raise ValueError(f"Can't parse {x}")
-        n_h, n_m, n_s = list(map(int, to_add + last_split))
 
         return datetime.timedelta(
-            days=n_days, hours=n_h, minutes=n_m, seconds=n_s, milliseconds=n_ms
+            days=n_days, hours=ptime.hour, minutes=ptime.minute, seconds=ptime.second, milliseconds=milliseconds
         )
 
     def calc_realMemNeeded(self, x, granularity_memory_request):
