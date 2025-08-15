@@ -165,6 +165,7 @@ class Helpers_WM():
             # NB: when TotalCPU=0, we assume usage factor = 100% for all CPU cores
             return x.CPUwallclocktime_
 
+        print(x.TotalCPUtime_, x.CPUwallclocktime_)
         assert x.TotalCPUtime_ <= x.CPUwallclocktime_
         return x.TotalCPUtime_
 
@@ -256,7 +257,7 @@ class WorkloadManager(Helpers_WM):
                 "-P",
                 f"-r {','.join(list(self.cluster_info['partitions']))}"
             ]
-
+            print(" ".join(bash_com))
             # logs = subprocess.run(bash_com, capture_output=True) # this line is the new way, but doesn't work with python 3.6 or earlier. line below is the legacy way. https://stackoverflow.com/questions/4760215/running-shell-command-and-capturing-the-output
             logs = subprocess.run(bash_com, stdout=subprocess.PIPE)
             self.logs_raw = logs.stdout
@@ -307,7 +308,8 @@ class WorkloadManager(Helpers_WM):
         # This is the total CPU used time, accross all cores.
         # But it is not reliably logged
         self.logs_df['TotalCPUtime_'] = self.logs_df['TotalCPU'].apply(self.parse_timedelta)
-
+        print(self.logs_df[['TotalCPUtime_', 'TotalCPU']][10:20])
+        print("\n")
         ### Parse core-wallclock time
         # This is the maximum time cores could use, if used at 100% (Elapsed time * CPU count)
         if 'CPUTime' in self.logs_df.columns:
