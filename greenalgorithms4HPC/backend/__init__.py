@@ -226,6 +226,7 @@ def main_backend(args):
         except yaml.YAMLError as exc:
             print(exc)
 
+    print(f"params: {fParams}")
     GA = GA_tools(cluster_info, fParams)
 
     df = extract_data(args, cluster_info=cluster_info)
