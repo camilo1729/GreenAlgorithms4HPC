@@ -253,7 +253,8 @@ class WorkloadManager(Helpers_WM):
                 self.args.endDay,  # format YYYY-MM-DD
                 "--format",
                 "UID,User,JobID,JobName,Submit,Elapsed,Partition,NNodes,NCPUS,TotalCPU,CPUTime,ReqMem,MaxRSS,WorkDir,State,Account,AllocTres",
-                "-P"
+                "-P",
+                f"-r {','.join(list(self.cluster_info['partitions']))}"
             ]
 
             # logs = subprocess.run(bash_com, capture_output=True) # this line is the new way, but doesn't work with python 3.6 or earlier. line below is the legacy way. https://stackoverflow.com/questions/4760215/running-shell-command-and-capturing-the-output
