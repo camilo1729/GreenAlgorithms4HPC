@@ -20,11 +20,13 @@ class Helpers_WM():
         :param unit: [str] unit of `memory`, has to be one of ['M', 'G', 'K']
         :return: [float] memory in GB.
         """
-        assert unit in ['M', 'G', 'K']
+        assert unit in ['M', 'G', 'K', 'T']
         if unit == 'M':
             memory /= 1e3
         elif unit == 'K':
             memory /= 1e6
+        elif unit == 'T':
+            memory *= 1e3
         return memory
 
     def calc_ReqMem(self, x):
