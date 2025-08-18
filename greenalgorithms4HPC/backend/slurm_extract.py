@@ -165,7 +165,10 @@ class Helpers_WM():
             # NB: when TotalCPU=0, we assume usage factor = 100% for all CPU cores
             return x.CPUwallclocktime_
 
-        assert x.TotalCPUtime_ <= x.CPUwallclocktime_
+        if x.TotalCPUtime_.total_seconds() > 1:
+            # The total CPU time of the job may exceed the job's elapsed time for jobs that include multiple job steps.
+            # https://slurm.schedmd.com/sacct.html
+            assert x.TotalCPUtime_ <= x.CPUwallclocktime_
         return x.TotalCPUtime_
 
     def calc_GPUusage2use(self, x):
