@@ -9,7 +9,7 @@
 userCWD="$(pwd)"
 
 # Cd into the directory where the GA files are located
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." ; pwd -P )
 cd "$parent_path"
 export GA4HPC_CONFDIR=$parent_path/greenalgorithms4HPC/data
 # Test if the virtualenv GA_env already exists, and if not, creates it. Download python 3.8 or higher for better results.
