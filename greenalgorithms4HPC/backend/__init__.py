@@ -190,7 +190,7 @@ def summarise_data(df, args):
     df_userdaily = agg_jobs(df, ['SubmitDate'])
     df_overallStats = agg_jobs(df_userdaily)
     dict_overallStats = df_overallStats.iloc[0, :].to_dict()
-    userID = df.UserX[0]
+    userID = df.reset_index().UserX[0]
 
     output = {
         "userDaily": df_userdaily,
