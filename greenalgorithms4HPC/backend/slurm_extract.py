@@ -258,6 +258,8 @@ class WorkloadManager(Helpers_WM):
                 "-r",
                 f"{','.join(list(self.cluster_info['partitions']))}"
             ]
+            if self.args.filterGlobalAccount:
+                bash_com += ['--allusers', '-A', self.args.filterGlobalAccount]
 
             # logs = subprocess.run(bash_com, capture_output=True) # this line is the new way, but doesn't work with python 3.6 or earlier. line below is the legacy way. https://stackoverflow.com/questions/4760215/running-shell-command-and-capturing-the-output
             logs = subprocess.run(bash_com, stdout=subprocess.PIPE)

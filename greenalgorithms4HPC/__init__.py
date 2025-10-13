@@ -42,6 +42,8 @@ def create_arguments():
                         default='all')
     parser.add_argument('--filterAccount', type=str,
                         help='Only consider jobs charged under this account')
+    parser.add_argument('--filterGlobalAccount', type=str,
+                        help='Consider jobs for all users charged under this account')
     parser.add_argument('--customSuccessStates', type=str, default='',
                         help="Comma-separated list of job states. By default, only jobs that exit with status CD or \
                                  COMPLETED are considered successful (PENDING, RUNNING and REQUEUD are ignored). \
