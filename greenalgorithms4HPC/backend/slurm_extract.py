@@ -390,16 +390,16 @@ class WorkloadManager(Helpers_WM):
         })
 
         ### Remove jobs that are still running or currently queued
-        self.df_agg = self.df_agg_0.loc[self.df_agg_0.StateX != -2]
+        self.df_agg = self.df_agg_0.loc[self.df_agg_0.StateX != -2].copy()
 
         ### Turn StateX==-2 into 1
         self.df_agg.loc[self.df_agg.StateX == -1, 'StateX'] = 1
 
         ### Replace UsedMem_=-1 with memory requested (for when MaxRSS=NaN)
-        self.df_agg['UsedMem2_'] = self.df_agg.apply(self.cleam_UsedMem, axis=1)
+        self.df_agg.loc[:, 'UsedMem2_'] = self.df_agg.apply(self.cleam_UsedMem, axis=1)
 
         ### Label as CPU or GPU partition
-        self.df_agg['PartitionTypeX'] = self.df_agg.PartitionX.apply(self.set_partitionType)
+        self.df_agg.loc[:, 'PartitionTypeX'] = self.df_agg.PartitionX.apply(self.set_partitionType)
 
         # Just used to clean up with old logs:
         if 'AllocTRES' not in self.logs_df.columns:
@@ -417,8 +417,8 @@ class WorkloadManager(Helpers_WM):
             print(f"(!) WARNING: {self.df_agg.UserX.isnull().sum()} jobs have missing Usernames")
 
         ### add the usage time to use for calculations
-        self.df_agg['TotalCPUtime2useX'] = self.df_agg.apply(self.calc_CPUusage2use, axis=1)
-        self.df_agg['TotalGPUtime2useX'] = self.df_agg.apply(self.calc_GPUusage2use, axis=1)
+        self.df_agg.loc[:, 'TotalCPUtime2useX'] = self.df_agg.apply(self.calc_CPUusage2use, axis=1)
+        self.df_agg.loc[:, 'TotalGPUtime2useX'] = self.df_agg.apply(self.calc_GPUusage2use, axis=1)
 
         ### Calculate core-hours charged
         self.df_agg[['CPUhoursChargedX', 'GPUhoursChargedX']] = self.df_agg.apply(self.calc_coreHoursCharged, axis=1, result_type='expand')
