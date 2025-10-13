@@ -15,11 +15,10 @@ export GA4HPC_CONFDIR=$parent_path/greenalgorithms4HPC/data
 # Test if the virtualenv GA_env already exists, and if not, creates it. Download python 3.8 or higher for better results.
 if [ ! -f .venv/bin/activate ]; then
   echo "Need to create virtualenv"
-  /usr/bin/python3.8 -m venv .venv # this line needs updating to load python on your server
+  /usr/bin/python -m venv .venv # this line needs updating to load python on your server
   source .venv/bin/activate
   pip3 install .
 else
-  echo "Virtualenv: OK"
   source .venv/bin/activate
 fi
 
@@ -39,5 +38,4 @@ echo "Python versions: OK"
 
 
 # Run the python code and pass on the arguments
-#userCWD="/home/ll582/ with space" # DEBUGONLY
 myCarbonFootprint "$@" --userCWD "$userCWD"
