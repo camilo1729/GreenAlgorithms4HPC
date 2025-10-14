@@ -96,35 +96,21 @@ optional arguments:
 
 ### Step-by-step
 
-1. Clone this repository in a shared directory on your cluster:
+1. Clone this repository in a shared directory on the cluster using `dcsrsoft` user:
     ```bash
-    $ git clone git@github.unil.ch:ci-dcsr/GreenAlgorithms4HPC.git /dcsrsoft/spack/external/GA4HPC
+    cd /dcsrsoft/spack/external/
+    $ git clone git@github.unil.ch:ci-dcsr/GreenAlgorithms4HPC.git
     ```
 
-2. Enter directory `/dcsrsoft/spack/external/GA4HPC` and execute `myCarbonFootprint`. It will check that the correct version of python is used 
+2. Enter directory `/dcsrsoft/spack/external/GreenAlgorithms4HPC` and execute `green_hpc`. It will check that the correct version of python is used 
 and will create the virtualenv with the required packages, based on `requirements.txt`:
-3. 
-```shell script
-$ ./myCarbonFootprint.sh
-```
 
-5. Edit `cluster_info.yaml` to plug in the values corresponding to the hardware specs of your cluster
+
+3. Edit `cluster_info.yaml` to plug in the values corresponding to the hardware specs of your cluster
    (this is the tricky step). You can ask your HPC team and 
    you can find a lot of useful values on the Green Algorithms GitHub: https://github.com/GreenAlgorithms/green-algorithms-tool/tree/master/data
 
-
-### How to update the software once installed
-
-_More elegant solutions welcome! [Discussion here](https://github.com/Llannelongue/GreenAlgorithms4HPC/issues/1)._
-
-⚠️ Make sure you have saved your custom version of `cluster_info.yaml` 
-and the way to load python3.8 the first time.
-
-- `git reset --hard` To remove local changes to files (hence the need for a backup!)
-- `git pull`
-- Update `cluster_info.yaml` as described above.
-- `chmod +x myCarbonFootprint.sh` to make it executable again
-- Test `myCarbonFootprint.sh` 
+   
 
 ## FAQ
 
@@ -142,3 +128,7 @@ There are some example of intermediary files in [example_files/](example_files/)
 For the workload manager part of the code:
 - [The raw output](example_files/example_sacctOutput_raw.txt) ([here](example_files/example_sacctOutput_raw_asDF.tsv) as a table) from the `sacct` SLURM command (this is the command pulling all the logs from SLURM), i.e. `WM.logs_raw`, the output of `WM.pull_logs()`.
 - [The cleaned output of the workload manager step](example_files/example_output_workloadManager.tsv), i.e. `WM.df_agg`, the output of `WM.clean_logs_df()`. Only the columns with a name ending with X are needed (the other ones are being used by the workload manager script). NB: the `pd.DataFrame` has been converted to a csv to be included here.
+
+## TODO
+
+- Add instructions to update package
